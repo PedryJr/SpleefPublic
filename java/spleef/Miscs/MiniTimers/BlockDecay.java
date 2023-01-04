@@ -3,17 +3,17 @@ package spleef.Miscs.MiniTimers;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import spleef.Blueprints.ArenaBlueprint;
+import spleef.Blueprints.SpleefBlueprint;
 import spleef.spluff;
 
 import java.util.Random;
 
 public class BlockDecay extends BukkitRunnable {
 
-    ArenaBlueprint arena;
+    SpleefBlueprint arena;
     spluff plugin;
     BukkitTask action;
-    public BlockDecay(spluff plugin, ArenaBlueprint arena){
+    public BlockDecay(spluff plugin, SpleefBlueprint arena){
 
         this.plugin = plugin;
         this.arena = arena;

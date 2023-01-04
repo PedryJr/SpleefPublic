@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.*;
-import spleef.Blueprints.ArenaBlueprint;
+import spleef.Blueprints.SpleefBlueprint;
 import spleef.Miscs.MiniTimers.BlockDecay;
 import spleef.spluff;
 
@@ -14,11 +14,11 @@ import java.util.Objects;
 public class BeginDecay extends BukkitRunnable {
 
     spluff plugin;
-    ArenaBlueprint arena;
+    SpleefBlueprint arena;
     int seconds;
     public BukkitTask blockDecay;
 
-    public BeginDecay(spluff plugin, ArenaBlueprint arena){
+    public BeginDecay(spluff plugin, SpleefBlueprint arena){
 
         this.plugin = plugin;
         this.arena = arena;

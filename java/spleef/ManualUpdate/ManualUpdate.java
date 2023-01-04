@@ -2,7 +2,7 @@ package spleef.ManualUpdate;
 
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
-import spleef.Blueprints.ArenaBlueprint;
+import spleef.Blueprints.SpleefBlueprint;
 
 import java.sql.*;
 
@@ -25,7 +25,7 @@ public class ManualUpdate extends BukkitRunnable {
     void UpdateLeaderboard() throws SQLException {
 
 
-        for(ArenaBlueprint arena : arenaList){
+        for(SpleefBlueprint arena : spleefArenaList){
 
             if(arena.active.isEmpty()){
 

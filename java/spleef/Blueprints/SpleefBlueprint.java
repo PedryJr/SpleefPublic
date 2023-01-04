@@ -14,7 +14,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.ArrayList;
 
-public class ArenaBlueprint {
+public class SpleefBlueprint {
 
     public int locationx;
     public int locationy;
@@ -35,13 +35,14 @@ public class ArenaBlueprint {
     public ItemStack icon;
     public ArrayList<Player> que = new ArrayList<>();
     public ArrayList<Player> active = new ArrayList<>();
+    public ArrayList<Player> spectators = new ArrayList<>();
     public ArrayList<Player> resetQue = new ArrayList<>();
     public ArrayList<Player> playtoQue = new ArrayList<>();
     public ArrayList<Block> blocks = new ArrayList<>();
     public ScoreboardManager spleefBoardManager = Bukkit.getScoreboardManager();
     public Scoreboard spleefBoard;
     public String decayState;
-    public ArenaBlueprint ms;
+    public SpleefBlueprint ms;
 
     {
         assert spleefBoardManager != null;
@@ -50,7 +51,7 @@ public class ArenaBlueprint {
 
     public Objective spleefMatch = spleefBoard.registerNewObjective(ChatColor.translateAlternateColorCodes('&', "SnowCentral"), "dummy");
 
-    public ArenaBlueprint(int locationx, int locationy, int locationz, int sizex, int sizez, String name, ItemStack icon){
+    public SpleefBlueprint(int locationx, int locationy, int locationz, int sizex, int sizez, String name, ItemStack icon){
 
         this.winPoints = 7;
 
@@ -78,24 +79,5 @@ public class ArenaBlueprint {
         decayState = "Off";
 
     }
-
-    public ArrayList getPlayers(){
-
-
-
-        ArrayList<String> playerNames = new ArrayList<>();
-
-        for(Player p : active){
-
-            playerNames.add(p.getPlayerListName());
-
-        }
-
-        return playerNames;
-
-    }
-
-
-
 
 }

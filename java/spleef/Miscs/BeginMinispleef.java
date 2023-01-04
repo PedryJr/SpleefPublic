@@ -7,13 +7,15 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import spleef.Blueprints.ArenaBlueprint;
+import spleef.Blueprints.SpleefBlueprint;
 import spleef.spluff;
+
+import static spleef.ManagerMethods.SpleefMethods.regenerateArena;
 
 public class BeginMinispleef extends BukkitRunnable {
 
     spluff plugin;
-    ArenaBlueprint arena;
+    SpleefBlueprint arena;
     int seconds;
     int resetsec;
     Location minispleefSpawn1;
@@ -23,9 +25,9 @@ public class BeginMinispleef extends BukkitRunnable {
     int sizez;
     boolean frequent = false;
 
-    ArenaBlueprint minispleef;
+    SpleefBlueprint minispleef;
 
-    public BeginMinispleef(spluff plugin, ArenaBlueprint arena){
+    public BeginMinispleef(spluff plugin, SpleefBlueprint arena){
 
         this.plugin = plugin;
         this.arena = arena;
@@ -42,7 +44,7 @@ public class BeginMinispleef extends BukkitRunnable {
         sizex = 7;
         sizez = 9;
 
-        minispleef = new ArenaBlueprint((int) minispleefLoc.getX() + 7,(int) minispleefLoc.getY(),(int) minispleefLoc.getZ() + 10, sizex, sizez, "null", new ItemStack(Material.STONE));
+        minispleef = new SpleefBlueprint((int) minispleefLoc.getX() + 7,(int) minispleefLoc.getY(),(int) minispleefLoc.getZ() + 10, sizex, sizez, "null", new ItemStack(Material.STONE));
 
         this.arena.ms = minispleef;
 
@@ -70,7 +72,7 @@ public class BeginMinispleef extends BukkitRunnable {
                 case 10:
                     resetsec = 0;
                     seconds = 0;
-                    spluff.regenerateArena(minispleef);
+                    regenerateArena(minispleef);
             }
 
         }else{
@@ -107,7 +109,7 @@ public class BeginMinispleef extends BukkitRunnable {
                     }
                     arena.blocks.clear();
 
-                    spluff.regenerateArena(minispleef);
+                    regenerateArena(minispleef);
                     arena.blocks = minispleef.blocks;
 
                     break;
@@ -148,7 +150,7 @@ public class BeginMinispleef extends BukkitRunnable {
                         }
                         arena.blocks.clear();
 
-                        spluff.regenerateArena(minispleef);
+                        regenerateArena(minispleef);
                         arena.blocks = minispleef.blocks;
 
                     }

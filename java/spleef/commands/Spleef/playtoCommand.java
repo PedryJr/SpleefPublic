@@ -1,4 +1,4 @@
-package spleef.commands;
+package spleef.commands.Spleef;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,11 +7,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
-import spleef.Blueprints.ArenaBlueprint;
+import spleef.Blueprints.SpleefBlueprint;
 
 import java.util.Objects;
 
-import static spleef.spluff.arenaList;
+import static spleef.spluff.spleefArenaList;
 
 public class playtoCommand implements CommandExecutor {
     @Override
@@ -19,7 +19,7 @@ public class playtoCommand implements CommandExecutor {
 
         if(sender instanceof Player){
 
-            for(ArenaBlueprint arena : arenaList){
+            for(SpleefBlueprint arena : spleefArenaList){
 
                 if(arena.active.contains(sender)){
 

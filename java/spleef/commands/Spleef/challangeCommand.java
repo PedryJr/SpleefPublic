@@ -1,37 +1,29 @@
-package spleef.commands;
+package spleef.commands.Spleef;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import spleef.Blueprints.ArenaBlueprint;
+import spleef.Blueprints.SpleefBlueprint;
 import spleef.Blueprints.QueBlueprint;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-import static spleef.spluff.arenaList;
-import static spleef.spluff.padding;
+import static spleef.spluff.*;
+
 public class challangeCommand implements CommandExecutor {
-    public static ItemStack accept = new ItemStack(Material.WOOL);
-    public static ItemStack deny = new ItemStack(Material.CONCRETE_POWDER);
-    public static Inventory challange = Bukkit.createInventory(null, 36, ChatColor.translateAlternateColorCodes('&', "   &f&lSnow&b&lCentral &8- &cChallange!"));
-    public static ArrayList<QueBlueprint> challangeList = new ArrayList<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(sender instanceof Player){
 
-            for(ArenaBlueprint arena : arenaList){
+            for(SpleefBlueprint arena : spleefArenaList){
 
-                    for(ArenaBlueprint arena1 : arenaList) {
+                    for(SpleefBlueprint arena1 : spleefArenaList) {
 
                         if (arena1.active.contains(sender)) {
 
@@ -42,12 +34,6 @@ public class challangeCommand implements CommandExecutor {
                         if (arena1.que.contains(sender)) {
 
                             arena1.que.remove(sender);
-
-                        }
-                        if (arena1.que.contains(Bukkit.getPlayer(args[0]))) {
-
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bThat player is in a match.."));
-                            return false;
 
                         }
                         if (args[0].equals(Objects.requireNonNull(((Player) sender).getPlayer()).getPlayerListName())) {
@@ -61,6 +47,12 @@ public class challangeCommand implements CommandExecutor {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bThat arena is in use.."));
                             return false;
                         }
+                        if(arena1.spectators.contains(sender)){
+
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bYou are currently spectating someone, please exit spectator mode to play!"));
+                            return false;
+
+                        }
                     }
 
                     for(Player player : Bukkit.getOnlinePlayers()){
@@ -68,7 +60,7 @@ public class challangeCommand implements CommandExecutor {
                         if(args[0].equals(player.getPlayerListName())){
 
 
-                            for(ArenaBlueprint arena1 : arenaList){
+                            for(SpleefBlueprint arena1 : spleefArenaList){
 
                                 if(arena1.name.equalsIgnoreCase(args[1])){
 

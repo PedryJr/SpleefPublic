@@ -1,4 +1,4 @@
-package spleef.LargeMethods;
+package spleef.ManagerMethods;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -6,11 +6,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import spleef.Blueprints.ArenaBlueprint;
+import spleef.Blueprints.ParkourBlueprint;
+import spleef.Blueprints.SpleefBlueprint;
 import spleef.Translator.Translator;
 import spleef.spluff;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import static spleef.spluff.*;
@@ -20,23 +23,54 @@ public class StupidlyLargeMethods {
     AsyncPlayerChatEvent event;
     spluff plugin;
 
-    public StupidlyLargeMethods(spluff plugin){
+    public StupidlyLargeMethods(spluff plugin) {
+
         this.plugin = plugin;
+
     }
-    public static void renewArena(ArenaBlueprint arena){
+
+
+    public static void renewArena(ParkourBlueprint arena) {
+
+        switch (arena.name) {
+
+            case "test":
+
+                parkourArenaList.remove(test);
+                test = new ParkourBlueprint(5000, 33, 3000, 5008, 63, 2890, "test", new ItemStack(Material.BRICK));
+                parkourArenaList.add(test);
+
+                ItemMeta testMeta = test.icon.getItemMeta();
+                assert testMeta != null;
+                testMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&7Test"));
+                test.icon.setItemMeta(testMeta);
+
+                break;
+
+        }
+
+    }
+    public static void renewArena(SpleefBlueprint arena) {
 
         arena.active.clear();
         arena.que.clear();
         arena.playtoQue.clear();
         arena.resetQue.clear();
+        arena.spectators.clear();
+        if (arena.beginDecay != null) {
+            arena.beginDecay.cancel();
+        }
+        if (arena.beginMinispleef != null) {
+            arena.beginMinispleef.cancel();
+        }
 
-        switch (arena.name){
+        switch (arena.name) {
 
-            case "Coliseum" :
+            case "Coliseum":
 
-                arenaList.remove(Coliseum);
-                Coliseum = new ArenaBlueprint(0, 29, 3000, 22, 29, "Coliseum", new ItemStack(Material.CLAY_BALL));
-                arenaList.add(Coliseum);
+                spleefArenaList.remove(Coliseum);
+                Coliseum = new SpleefBlueprint(0, 29, 3000, 22, 29, "Coliseum", new ItemStack(Material.CLAY_BALL));
+                spleefArenaList.add(Coliseum);
 
                 ItemMeta coliseumMeta = Coliseum.icon.getItemMeta();
                 assert coliseumMeta != null;
@@ -45,11 +79,11 @@ public class StupidlyLargeMethods {
 
                 break;
 
-            case "Void" :
+            case "Void":
 
-                arenaList.remove(Void);
-                Void = new ArenaBlueprint(1000, 29, 3000, 22, 33, "Void", new ItemStack(Material.BEDROCK));
-                arenaList.add(Void);
+                spleefArenaList.remove(Void);
+                Void = new SpleefBlueprint(1000, 29, 3000, 22, 33, "Void", new ItemStack(Material.BEDROCK));
+                spleefArenaList.add(Void);
 
                 ItemMeta voidMeta = Void.icon.getItemMeta();
                 assert voidMeta != null;
@@ -59,9 +93,9 @@ public class StupidlyLargeMethods {
 
             case "Nations":
 
-                arenaList.remove(Nations);
-                Nations = new ArenaBlueprint(2000, 29, 0, 22, 33, "Nations", new ItemStack(Material.BANNER));
-                arenaList.add(Nations);
+                spleefArenaList.remove(Nations);
+                Nations = new SpleefBlueprint(2000, 29, 0, 22, 33, "Nations", new ItemStack(Material.BANNER));
+                spleefArenaList.add(Nations);
 
                 ItemMeta nationsMeta = Nations.icon.getItemMeta();
                 assert nationsMeta != null;
@@ -72,9 +106,9 @@ public class StupidlyLargeMethods {
 
             case "Spooky":
 
-                arenaList.remove(Spooky);
-                Spooky = new ArenaBlueprint(0, 29, 2000, 22, 33, "Spooky", new ItemStack(Material.PUMPKIN));
-                arenaList.add(Spooky);
+                spleefArenaList.remove(Spooky);
+                Spooky = new SpleefBlueprint(0, 29, 2000, 22, 33, "Spooky", new ItemStack(Material.PUMPKIN));
+                spleefArenaList.add(Spooky);
 
                 ItemMeta spookyMeta = Spooky.icon.getItemMeta();
                 assert spookyMeta != null;
@@ -85,9 +119,9 @@ public class StupidlyLargeMethods {
 
             case "Disco":
 
-                arenaList.remove(Disco);
-                Disco = new ArenaBlueprint(0, 29, 1000, 22, 29, "Disco", new ItemStack(Material.RECORD_10));
-                arenaList.add(Disco);
+                spleefArenaList.remove(Disco);
+                Disco = new SpleefBlueprint(0, 29, 1000, 22, 29, "Disco", new ItemStack(Material.RECORD_10));
+                spleefArenaList.add(Disco);
 
                 ItemMeta discoMeta = Disco.icon.getItemMeta();
                 assert discoMeta != null;
@@ -98,9 +132,9 @@ public class StupidlyLargeMethods {
 
             case "Forest":
 
-                arenaList.remove(Forest);
-                Forest = new ArenaBlueprint(1000, 29, 1000, 22, 29, "Forest", new ItemStack(Material.SAPLING));
-                arenaList.add(Forest);
+                spleefArenaList.remove(Forest);
+                Forest = new SpleefBlueprint(1000, 29, 1000, 22, 29, "Forest", new ItemStack(Material.SAPLING));
+                spleefArenaList.add(Forest);
 
                 ItemMeta forestMeta = Forest.icon.getItemMeta();
                 assert forestMeta != null;
@@ -111,9 +145,9 @@ public class StupidlyLargeMethods {
 
             case "Starwars":
 
-                arenaList.remove(Starwars);
-                Starwars = new ArenaBlueprint(2000, 29, 2000, 22, 29, "Starwars", new ItemStack(Material.SEA_LANTERN));
-                arenaList.add(Starwars);
+                spleefArenaList.remove(Starwars);
+                Starwars = new SpleefBlueprint(2000, 29, 2000, 22, 29, "Starwars", new ItemStack(Material.SEA_LANTERN));
+                spleefArenaList.add(Starwars);
 
                 ItemMeta starwarsMeta = Starwars.icon.getItemMeta();
                 assert starwarsMeta != null;
@@ -124,9 +158,9 @@ public class StupidlyLargeMethods {
 
             case "Reef":
 
-                arenaList.remove(Reef);
-                Reef = new ArenaBlueprint(1000, 29, 0, 22, 29, "Reef", new ItemStack(Material.RAW_FISH));
-                arenaList.add(Reef);
+                spleefArenaList.remove(Reef);
+                Reef = new SpleefBlueprint(1000, 29, 0, 22, 29, "Reef", new ItemStack(Material.RAW_FISH));
+                spleefArenaList.add(Reef);
 
                 ItemMeta reefMeta = Reef.icon.getItemMeta();
                 assert reefMeta != null;
@@ -137,9 +171,9 @@ public class StupidlyLargeMethods {
 
             case "Ancient":
 
-                arenaList.remove(Ancient);
-                Ancient = new ArenaBlueprint(1000, 29, 2000, 22, 29, "Ancient", new ItemStack(Material.BONE));
-                arenaList.add(Ancient);
+                spleefArenaList.remove(Ancient);
+                Ancient = new SpleefBlueprint(1000, 29, 2000, 22, 29, "Ancient", new ItemStack(Material.BONE));
+                spleefArenaList.add(Ancient);
 
                 ItemMeta ancientMeta = Ancient.icon.getItemMeta();
                 assert ancientMeta != null;
@@ -150,9 +184,9 @@ public class StupidlyLargeMethods {
 
             case "Timberland":
 
-                arenaList.remove(Timberland);
-                Timberland = new ArenaBlueprint(2000, 29, 1000, 22, 29, "Timberland", new ItemStack(Material.LOG));
-                arenaList.add(Timberland);
+                spleefArenaList.remove(Timberland);
+                Timberland = new SpleefBlueprint(2000, 29, 1000, 22, 29, "Timberland", new ItemStack(Material.LOG));
+                spleefArenaList.add(Timberland);
 
                 ItemMeta timberlandMeta = Timberland.icon.getItemMeta();
                 assert timberlandMeta != null;
@@ -163,9 +197,9 @@ public class StupidlyLargeMethods {
 
             case "Dunetemple":
 
-                arenaList.remove(DuneTemple);
-                DuneTemple = new ArenaBlueprint(1000, 29, -1000, 22, 29, "Dunetemple", new ItemStack(Material.LOG));
-                arenaList.add(DuneTemple);
+                spleefArenaList.remove(DuneTemple);
+                DuneTemple = new SpleefBlueprint(1000, 29, -1000, 22, 29, "Dunetemple", new ItemStack(Material.SANDSTONE));
+                spleefArenaList.add(DuneTemple);
 
                 ItemMeta DuneTempleMeta = DuneTemple.icon.getItemMeta();
                 assert DuneTempleMeta != null;
@@ -176,9 +210,9 @@ public class StupidlyLargeMethods {
 
             case "Oasis":
 
-                arenaList.remove(Oasis);
-                Oasis = new ArenaBlueprint(1000, 29, -1000, 22, 29, "Oasis", new ItemStack(Material.LOG));
-                arenaList.add(Oasis);
+                spleefArenaList.remove(Oasis);
+                Oasis = new SpleefBlueprint(998, 29, -2019, 22, 29, "Oasis", new ItemStack(Material.getMaterial(38)));
+                spleefArenaList.add(Oasis);
 
                 ItemMeta OasisMeta = Oasis.icon.getItemMeta();
                 assert OasisMeta != null;
@@ -196,227 +230,217 @@ public class StupidlyLargeMethods {
 
         this.event = event;
 
-        Translator translate = new Translator();
-
-        String format = event.getFormat();
-
         Connection connection = DriverManager.getConnection(url, username, password);
 
         Statement statement = connection.createStatement();
 
         ResultSet data = statement.executeQuery("select * from players");
 
-        while(data.next()){
+        while (data.next()) {
 
-            if(data.getString("UUID").equals(event.getPlayer().getUniqueId().toString())){
+            if (data.getString("UUID").equals(event.getPlayer().getUniqueId().toString())) {
 
                 int xp = data.getInt("xp");
                 int lvl = 1;
 
-                if(xp > 200){
+                if (xp > 200) {
 
                     lvl++;
                 }
-                if(xp > 260){
+                if (xp > 260) {
 
                     lvl++;
                 }
-                if(xp > 338){
+                if (xp > 338) {
 
                     lvl++;
                 }
-                if(xp > 440){
+                if (xp > 440) {
 
                     lvl++;
                 }
-                if(xp > 571){
+                if (xp > 571) {
 
                     lvl++;
                 }
-                if(xp > 742){
+                if (xp > 742) {
 
                     lvl++;
                 }
-                if(xp > 965){
+                if (xp > 965) {
 
                     lvl++;
                 }
-                if(xp > 1254){
+                if (xp > 1254) {
 
                     lvl++;
                 }
-                if(xp > 1631){
+                if (xp > 1631) {
 
                     lvl++;
                 }
-                if(xp > 2120){
+                if (xp > 2120) {
 
                     lvl++;
                 }
-                if(xp > 2757){
+                if (xp > 2757) {
 
                     lvl++;
                 }
-                if(xp > 3584){
+                if (xp > 3584) {
 
                     lvl++;
                 }
-                if(xp > 4659){
+                if (xp > 4659) {
 
                     lvl++;
                 }
-                if(xp > 6057){
+                if (xp > 6057) {
 
                     lvl++;
                 }
-                if(xp > 7874){
+                if (xp > 7874) {
 
                     lvl++;
                 }
-                if(xp > 10236){
+                if (xp > 10236) {
 
                     lvl++;
                 }
-                if(xp > 13307){
+                if (xp > 13307) {
 
                     lvl++;
                 }
-                if(xp > 17299){
+                if (xp > 17299) {
 
                     lvl++;
                 }
-                if(xp > 22488){
+                if (xp > 22488) {
 
                     lvl++;
                 }
-                if(xp > 29235){
+                if (xp > 29235) {
 
                     lvl++;
                 }
-                if(xp > 38006){
+                if (xp > 38006) {
 
                     lvl++;
                 }
-                if(xp > 49408){
+                if (xp > 49408) {
 
                     lvl++;
                 }
-                if(xp > 64230){
+                if (xp > 64230) {
 
                     lvl++;
                 }
-                if(xp > 83499){
+                if (xp > 83499) {
 
                     lvl++;
                 }
-                if(xp > 104374){
+                if (xp > 104374) {
 
                     lvl++;
                 }
-                if(xp > 125249){
+                if (xp > 125249) {
 
                     lvl++;
                 }
-                if(xp > 150299){
+                if (xp > 150299) {
 
                     lvl++;
                 }
-                if(xp > 180359){
+                if (xp > 180359) {
 
                     lvl++;
                 }
-                if(xp > 216431){
+                if (xp > 216431) {
 
                     lvl++;
                 }
-                if(xp > 259717){
+                if (xp > 259717) {
 
                     lvl++;
                 }
-                if(xp > 311661){
+                if (xp > 311661) {
 
                     lvl++;
                 }
-                if(xp > 373993){
+                if (xp > 373993) {
 
                     lvl++;
                 }
-                if(xp > 448792){
+                if (xp > 448792) {
 
                     lvl++;
                 }
-                if(xp > 538550){
+                if (xp > 538550) {
 
                     lvl++;
                 }
-                if(xp > 646261){
+                if (xp > 646261) {
 
                     lvl++;
                 }
-                if(xp > 775513){
+                if (xp > 775513) {
 
                     lvl++;
                 }
-                if(xp > 930616){
+                if (xp > 930616) {
 
                     lvl++;
                 }
-                if(xp > 1116739){
+                if (xp > 1116739) {
 
                     lvl++;
                 }
-                if(xp > 1340087){
+                if (xp > 1340087) {
 
                     lvl++;
                 }
-                if(xp > 1608104){
+                if (xp > 1608104) {
 
                     lvl++;
                 }
-                if(xp > 1929725){
+                if (xp > 1929725) {
 
                     lvl++;
                 }
-                if(xp > 2315670){
+                if (xp > 2315670) {
 
                     lvl++;
                 }
-                if(xp > 2778804){
+                if (xp > 2778804) {
 
                     lvl++;
                 }
-                if(xp > 3334565){
+                if (xp > 3334565) {
 
                     lvl++;
                 }
-                if(xp > 4001478){
+                if (xp > 4001478) {
 
                     lvl++;
                 }
-                if(xp > 4801774){
+                if (xp > 4801774) {
 
                     lvl++;
                 }
-                if(xp > 5762129){
+                if (xp > 5762129) {
 
                     lvl++;
                 }
-                if(xp > 6914555){
+                if (xp > 6914555) {
 
                     lvl++;
                 }
-                if(xp > 8297466){
+                if (xp > 8297466) {
 
                     lvl = 50;
-                }else{
-
-                    lvl++;
-
                 }
 
                 sendMessage(event.getPlayer(), lvl, event.getRecipients(), data);
-
-                event.setCancelled(true);
 
             }
 
@@ -437,79 +461,79 @@ public class StupidlyLargeMethods {
         String originalMessage = event.getMessage();
 
         if (sender.hasPermission("group.creator")) {
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&4: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&4: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.creator", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.admins")){
+        } else if (sender.hasPermission("group.admins")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&c: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&c: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.admins", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.meneger")){
+        } else if (sender.hasPermission("group.meneger")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&5: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&5: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.meneger", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.headmoder")){
+        } else if (sender.hasPermission("group.headmoder")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&d: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&d: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.headmoder", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.moder")){
+        } else if (sender.hasPermission("group.moder")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&2: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&2: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.moder", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.newmoder")){
+        } else if (sender.hasPermission("group.newmoder")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&a: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&a: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.newmoder", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.builder")){
+        } else if (sender.hasPermission("group.builder")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&e: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&e: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.builder", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.youtube")){
+        } else if (sender.hasPermission("group.youtube")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&f: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&f: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.youtube", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.twitch")){
+        } else if (sender.hasPermission("group.twitch")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&5: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&5: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.twitch", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.lord")){
+        } else if (sender.hasPermission("group.lord")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&9: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&9: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.lord", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.frozty")){
+        } else if (sender.hasPermission("group.frozty")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&b: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&b: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.frozty", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.chill")){
+        } else if (sender.hasPermission("group.chill")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&1: &f" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&1: &f" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.chill", originalMessage, fromLang);
 
-        }else if(sender.hasPermission("group.default")){
+        } else if (sender.hasPermission("group.default")) {
 
-            sender.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&8: &7" + originalMessage));
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&8: &7" + originalMessage));
 
             spreadMessage(sender, lvl, recipients, data1, "group.default", originalMessage, fromLang);
 
@@ -520,72 +544,93 @@ public class StupidlyLargeMethods {
     public void spreadMessage(Player sender, int lvl, Set<Player> recipients, ResultSet data1, String group, String originalMessage, String fromLang) throws Exception {
 
         Translator translator = new Translator();
+        Set<Player> toRemove = new HashSet<>();
 
         while (data1.next()) {
 
             for (Player player : recipients) {
 
                 if (data1.getString("UUID").equals(player.getUniqueId().toString())) {
+
                     String newMessage;
                     String toLang = data1.getString("lang");
-                    if(fromLang.equals(toLang)){
+
+                    if (fromLang.equals(toLang)) {
+
                         newMessage = originalMessage;
-                    }else{
+
+                    } else {
+
                         newMessage = translator.translate(fromLang, toLang, originalMessage);
+
                     }
 
                     if (sender != player) {
 
-                        switch(group){
+                        switch (group) {
 
                             case "group.creator":
-                            player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&4: &f" + newMessage));
+                                toRemove.add(player);
+                                player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&4: &f" + newMessage));
                                 break;
                             case "group.admins":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&c: &f" + newMessage));
                                 break;
                             case "group.meneger":
                             case "group.twitch":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&5: &f" + newMessage));
                                 break;
                             case "group.headmoder":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&d: &f" + newMessage));
                                 break;
                             case "group.moder":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&2: &f" + newMessage));
                                 break;
                             case "group.newmoder":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&a: &f" + newMessage));
                                 break;
                             case "group.builder":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&e: &f" + newMessage));
                                 break;
                             case "group.youtube":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&f: &f" + newMessage));
                                 break;
                             case "group.lord":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&9: &f" + newMessage));
                                 break;
                             case "group.frozty":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&b: &f" + newMessage));
                                 break;
                             case "group.chill":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&1: &f" + newMessage));
                                 break;
                             case "group.default":
+                                toRemove.add(player);
                                 player.sendRawMessage(ChatColor.translateAlternateColorCodes('&', " &7-&c" + lvl + "&7- " + sender.getDisplayName() + "&8: &7" + newMessage));
-                                break;
 
                         }
 
+                    }else{
+
+
                     }
-
                 }
-
             }
+        }
+        for(Player player :toRemove){
+
+            event.getRecipients().remove(player);
 
         }
-
     }
-
 }
